@@ -13,16 +13,24 @@ import NoteForm from "@/components/NoteForm/NoteForm";
 import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import { useDebounce } from "use-debounce";
+import type { NoteTag } from "@/types/note";
 
-export default function NotesClient() {
+const PER_PAGE = 12;
+
+type NotesClientProps = {
+  initialTag?: "" | NoteTag;
+};
+export default function NotesClient({ initialTag }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
+  const [tag] = useState<"" | NoteTag>(initialTag ?? "");
+
 
   const { data, isLoading, isError, error } = useQuery<FetchNotesResponse, Error>({
-    queryKey: ["notes", page, debouncedSearch],
-    queryFn: () => fetchNotes({ page, perPage: 12, search: debouncedSearch }),
+    queryKey: ["notes", page, debouncedSearch, tag],
+    queryFn: () => fetchNotes({ page, perPage: PER_PAGE, search: debouncedSearch, tag }),
     placeholderData: (prev) => prev,
   });
 

@@ -17,6 +17,7 @@ export interface FetchNotesParams {
   page?: number;
   perPage?: number;
   search?: string;
+  tag?: string;
 }
 
 export interface FetchNotesResponse {
@@ -30,6 +31,7 @@ export async function fetchNotes(
   const cleanedParams: FetchNotesParams = { ...params };
 
   if (!params.search?.trim()) delete cleanedParams.search;
+  if (!params.tag) delete cleanedParams.tag;
 
   const response = await instance.get<FetchNotesResponse>("/notes", {
     params: cleanedParams,
