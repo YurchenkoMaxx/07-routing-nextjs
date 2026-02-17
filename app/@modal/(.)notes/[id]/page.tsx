@@ -1,4 +1,4 @@
-import NotePreviewModal from "@/components/NotePreview/NotePreviewModal";
+import NotePreviewModal from "./NotePreview.client";
 
 type PageProps = {
   params: Promise<{ id: string }>;
