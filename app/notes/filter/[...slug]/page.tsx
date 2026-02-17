@@ -10,12 +10,12 @@ const TAGS: NoteTag[] = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
 const PER_PAGE = 12;
 
 type PageProps = {
-  params: { tag: string[] };
+  params: { slug: string[] };
 };
 
 export default async function NotesByTagPage({ params }: PageProps) {
   const resolvedParams=await params;
-  const tagFromUrl = resolvedParams.tag?.[0] ?? "all";
+  const tagFromUrl = resolvedParams.slug?.[0] ?? "all";
 
   const tag: "" | NoteTag =
     tagFromUrl === "all"
